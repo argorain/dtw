@@ -1,5 +1,6 @@
 #include <iostream>
 #include "dtw.h"
+#include "record.h"
 
 using namespace std;
 
@@ -20,6 +21,10 @@ int main() {
     w.path();
 
     w.printResult();
+
+    Record rec = Record();
+    cerr << "Return code initRecord: " << rec.initRecord() << endl;
+    cerr << "Return code record: " << rec.recordSound() << endl;
 
     return 0;
 }

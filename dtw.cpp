@@ -4,7 +4,6 @@
 
 #include <iomanip>
 #include "dtw.h"
-#include "Vector.h"
 #include "check.h"
 
 dtw::dtw(unsigned int size){
@@ -62,8 +61,10 @@ void dtw::diffs(const int * sA, const int * sB){
 void dtw::path(){
     unsigned int x=0;
     unsigned int y=0;
+    float num=0;
 
     while(x<size-1 && y<size-1){
+        num=matrix[x][y];
         if(matrix[x+1][y+1] < matrix[x+1][y] && matrix[x+1][y+1] < matrix[x][y+1]){
             //diag
             result[x][y]='o';
@@ -105,7 +106,7 @@ std::ostream& operator<<(std::ostream& aOStream, const dtw &p){
     aOStream << std::setprecision(2);
     for(unsigned int x=0; x<p.size; x++){
         for(unsigned int y=0; y<p.size; y++){
-            aOStream << p.matrix[x][y] << std::setw(5);
+            aOStream << std::setw(5) << p.matrix[x][y];
         }
         aOStream << std::endl;
     }
