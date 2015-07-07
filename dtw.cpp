@@ -7,7 +7,10 @@
 #include "Vector.h"
 #include "check.h"
 
-dtw::dtw(unsigned int size){
+dtw::dtw(unsigned int size, unsigned int corridor){
+    this->corrSize = corridor;
+    this->corridor = true;
+
     matrix = new float *[size];
     result = new char *[size];
     for(unsigned int i=0; i<size; i++){
@@ -51,7 +54,6 @@ void dtw::diffs(const int * sA, const int * sB){
     for(unsigned int y=0; y<size; y++){
         for(unsigned int x=0; x<size; x++){
             matrix[x][y] = vectSA[x].diffVector(vectSB[y]);
-            //std::cout << matrix[x][y] << std::endl;
         }
     }
 
@@ -79,7 +81,7 @@ void dtw::path(){
             y++;
         }
     }
-    matrix[x][y]=99;
+    result[x][y]='o';
 }
 
 void dtw::testMatrix(void){
@@ -101,14 +103,40 @@ void dtw::printResult(){
     }
 }
 
+void dtw::enableCorridor(void){
+    corridor = true;
+}
+
+void dtw::disableCorridor(void){
+    corridor = false;
+}
+
 std::ostream& operator<<(std::ostream& aOStream, const dtw &p){
-    aOStream << std::setprecision(2);
+    aOStream << std::setprecision(1) << std::fixed;
     for(unsigned int x=0; x<p.size; x++){
         for(unsigned int y=0; y<p.size; y++){
-            aOStream << p.matrix[x][y] << std::setw(5);
+            if(p.corridor){
+                if(x-y<p.corrSize || y-x<p.corrSize){
+                    if(p.result[x][y]=='o'){
+                        aOStream << '(';
+                        aOStream << std::right << std::setw(5) << p.matrix[x][y] << ')';
+                    }else{
+                        aOStream << std::right << std::setw(6) << p.matrix[x][y] << ' ';
+                    }
+                }else{
+                    aOStream << std::setw(7) << ' ';
+                }
+            }else{
+                if(p.result[x][y]=='o'){
+                    aOStream << '(';
+                    aOStream << std::right << std::setw(5) << p.matrix[x][y] << ')';
+                }else{
+                    aOStream << std::right << std::setw(6) << p.matrix[x][y] << ' ';
+                }
+            }
         }
         aOStream << std::endl;
+        
     }
-
     return aOStream;
 }
