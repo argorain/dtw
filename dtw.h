@@ -11,13 +11,14 @@
 class dtw {
 private:
     unsigned int size;
+    unsigned int corrSize;
+    bool corridor;
     float ** matrix;
     char ** result;
 
     Vector * vectorize(const int * series);
-
 public:
-    dtw(unsigned int size);
+    dtw(unsigned int size, unsigned int corridor);
     ~dtw();
 
     unsigned int getSize();
@@ -27,6 +28,8 @@ public:
 
     void printResult();
     void testMatrix(void);
+    void enableCorridor(void);
+    void disableCorridor(void);
 
     friend std::ostream& operator<<(std::ostream& aOStream, const dtw &p);
 
