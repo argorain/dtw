@@ -24,6 +24,8 @@
 **		- void stat(void); - slucuje obe predchozi funkce
 **/
 
+#if 0
+
 #ifndef __CHECK_H__
 #define __CHECK_H__
 
@@ -159,3 +161,5 @@ extern int my_fclose(FILE* streamPtr, unsigned int line, const char file[__CHECK
 #endif /* __cplusplus */
 
 #endif /* __CHECK_H__ */
+
+#endif
